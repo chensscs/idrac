@@ -1,0 +1,56 @@
+一、脚本运行格式：
+sh run.sh
+然后根据需求选择需执行的操作
+
+########## please option your choice: [1-10] ############
+(1)  Get server NIC mac-address
+(2)  Remove all or the virtual disk other than the system disk
+(3)  Physical Disk mode convert
+(4)  Create raid1 or raid5
+(5)  Add idrac user (JPush) and change root passwd
+(6)  Bios disable F1/F2 errot prompt and setup HDD first boot
+(7)  check system boot seq
+(8)  Restore the root default password
+(9)  reboot system
+(10) New server raid、bios init
+(99) Execute the command manually
+########################################################
+
+二、执行脚本选项说明
+1.获取服务器网卡的 mac-address
+2.根据需求删除所有虚拟磁盘或保留除系统盘的其它所有虚拟磁盘（机器转hadoop业务或出厂阵列不规划时应用）
+3.硬盘（包含SSD）在直通和raid模式间转换。
+4.创建raid1或raid5。
+5.添加idrac用户、更改及恢复默认root用户密码。
+6.更改BIOS（禁用F1、硬盘第一引导）
+7.检查系统第一启动项
+8.还原IDRAC root用户密码为 calvin
+9.通过IDRAC强行重启服务器
+10.把阵列清除、阵列创建、BIOS更改封装在一个脚本(阵列创建格式同选项4)
+99.执行传递的idrac命令
+
+
+三、hosts文件填写规范
+1.NIC_NUM后的数字表示第几块网卡，电口用网口3或4进行PXE安装，光口用网口1或2进行PXE安装 
+2.硬盘模式: [ all_raid | hdd_raid | hdd_jobd | ssd_raid | ssd_jobd ] (脚本会执行机器重启操作)
+书写格式：mode和”硬盘模式“间必须有空格。例：[ mode: hdd_raid ] 或 [ mode hdd_raid ] 均可。
+all_raid：所有硬盘都转换为RAID模式
+hdd_raid：除2块558G系统盘外，所有HDD磁盘转换为RAID模式
+hdd_jobd：除2块558G系统盘外，所有磁盘转换为直通模式
+ssd_raid：所有SSD磁盘转换为RAID模式
+ssd_jobd：所有SSD磁盘转换为直通模式
+3.阵列类型: [ 1 | 5 ]
+RAID5说明:
+方式一：有2块558G左右盘做sda ,其余HDD做sdb   
+方式二：所有HDD大小一样，划分300Ｇ做sda，剩下做sdb。两种方式都会判断是否有SSD)
+硬盘模式说明（脚本会执行机器重启操作）：
+4.IDRAC IP书写格式：
+方式一：192.168.1.1-10
+方式二：
+192.168.1.1
+192.168.1.2
+192.168.1.3
+
+四、清除虚拟磁盘操作分两种，按提示输入
+all：清除所有虚拟磁盘
+nosys：保留系统盘，其余虚拟磁盘删除
