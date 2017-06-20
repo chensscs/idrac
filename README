@@ -7,7 +7,7 @@ sh run.sh
 (2)  Remove all or the virtual disk other than the system disk
 (3)  Physical Disk mode convert
 (4)  Create raid1 or raid5
-(5)  Add idrac user (JPush) and change root passwd
+(5)  Add idrac user (Admin) and change root passwd
 (6)  Bios disable F1/F2 errot prompt and setup HDD first boot
 (7)  check system boot seq
 (8)  Restore the root default password
